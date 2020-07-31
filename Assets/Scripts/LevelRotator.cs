@@ -28,13 +28,20 @@ public class LevelRotator : MonoBehaviour, IDragHandler
     {
         this.gameMgr = gameMgr;
     }
+	
+	/// <summary>
+    /// Set new level to rotate around pivot.
+    /// </summary>
+    /// <param name="newLevel">New level</param>
+    public void SetNewLevel(GameObject newLevel)
+    {
+        level = newLevel;
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!IsRotationEnabled)
-            return;
-
-        RotateLevel(eventData.delta);
+        if (IsRotationEnabled)
+			RotateLevel(eventData.delta);
     }
 
     /// <summary>
@@ -81,14 +88,5 @@ public class LevelRotator : MonoBehaviour, IDragHandler
         {
             level.transform.RotateAround(pivot.transform.position, axis, -angleDelta * sensitivity);
         }
-    }
-
-    /// <summary>
-    /// Set new level to rotate around pivot.
-    /// </summary>
-    /// <param name="newLevel">New level</param>
-    public void SetNewLevel(GameObject newLevel)
-    {
-        level = newLevel;
-    }
+	}
 }

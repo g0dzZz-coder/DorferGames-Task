@@ -48,6 +48,22 @@ public class LevelController : MonoBehaviour
     {
         this.gameMgr = gameMgr;
     }
+	
+	/// <summary>
+    /// Activate next level, disable level rotation and begin ball animation.
+    /// </summary>
+    /// <param name="nextLevelPosition">Next level position</param>
+    public void BeginLevelTransition(Vector3 nextLevelPosition)
+    {
+        Level nextLevel = ActivateNextLevel(nextLevelPosition);
+
+        gameMgr.LevelRotator.SetNewLevel(nextLevel.gameObject);
+        gameMgr.LevelRotator.IsRotationEnabled = false;
+
+        ballStartPosition = ball.transform.position;
+        currentLevelTransitionTime = 0.0f;
+        isTransitioning = true;
+    }
 
     /// <summary>
     /// Check distance from ball to current level and restart scene if distance larger than threshold.
@@ -65,7 +81,7 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    /// <summary>
+	/// <summary>
     /// Activate next level and store reference to previous level.
     /// </summary>
     /// <param name="nextLevelPosition">Position of next level</param>
@@ -77,22 +93,6 @@ public class LevelController : MonoBehaviour
         levels[currentLevelId].Activate(nextLevelPosition);
 
         return levels[currentLevelId];
-    }
-
-    /// <summary>
-    /// Activate next level, disable level rotation and begin ball animation.
-    /// </summary>
-    /// <param name="nextLevelPosition">Next level position</param>
-    public void BeginLevelTransition(Vector3 nextLevelPosition)
-    {
-        Level nextLevel = ActivateNextLevel(nextLevelPosition);
-
-        gameMgr.LevelRotator.SetNewLevel(nextLevel.gameObject);
-        gameMgr.LevelRotator.IsRotationEnabled = false;
-
-        ballStartPosition = ball.transform.position;
-        currentLevelTransitionTime = 0.0f;
-        isTransitioning = true;
     }
 
     /// <summary>
